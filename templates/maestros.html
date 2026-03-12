@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+{% block container %}
+{% import "_macros.html" as macros %}
+
+<div class="py-32 relative overflow-x-auto sm:rounded-lg">
+  <form action="" method="POST" novalidate class="max-w-md mx-auto">
+
+    <div class="relative z-0 w-full mb-5 group">
+      {{ macros.campoNuevo(form.matricula, class="block py-2.5 px-30 w-full
+      text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300
+      appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer") }}
+    </div>
+
+    <div class="relative z-0 w-full mb-5 group">
+      {{ macros.campoNuevo(form.nombre, class="block py-2.5 px-30 w-full
+      text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300
+      appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer") }}
+    </div>
+
+    <div class="relative z-0 w-full mb-5 group">
+      {{ macros.campoNuevo(form.apellidos, class="block py-2.5 px-0 w-full
+      text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300
+      appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer") }}
+    </div>
+
+    <div class="relative z-0 w-full mb-5 group">
+      {{ macros.campoNuevo(form.especialidad, class="block py-2.5 px-0 w-full
+      text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300
+      appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer") }}
+    </div>
+
+    <div class="relative z-0 w-full mb-5 group">
+      {{ macros.campoNuevo(form.email, class="block py-2.5 px-0 w-full
+      text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300
+      appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer") }}
+    </div>
+
+    <div class="relative z-0 w-full mb-5 group">
+      {{ macros.campoNuevo(form.cursos, class="block py-2.5 px-0 w-full
+      text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300
+      appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer") }}
+    </div>
+
+    <div class="grid md:grid-cols-2 md:gap-6">
+      <input
+        type="submit"
+        id="btn1"
+        name="btn1"
+        value="Registrar"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
+        focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto
+        px-5 py-2.5 text-center"
+      />
+
+      <a href="index" class="bg-green-500 text-white px-4 py-2 rounded flex items-center gap-2 hover:bg-green-600">
+        Cancelar
+      </a>
+    </div>
+
+  </form>
+</div>
+
+<div class="py-32 relative overflow-x-auto sm:rounded-lg">
+  <div class="flex flex-col justify-between p-4 leading-normal">
+    <h1 class="mb-2 text-2xl font-bold">Matricula: {{mat}}</h1>
+    <h1>Nombre: {{nom}}</h1>
+    <h1>Apellidos: {{ape}}</h1>
+    <h1>Especialidad: {{esp}}</h1>
+    <h1>Email: {{email}}</h1>
+    <h1>Cursos: {{cur}}</h1>
+  </div>
+</div>
+
+{% endblock %}
