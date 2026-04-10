@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+{% block container %}
+
+<div class="container mx-auto mt-10 p-5 bg-white shadow-md rounded-lg dark:bg-gray-800">
+    <h2 class="text-2xl font-bold mb-5 dark:text-white">Registrar Curso</h2>
+    <form method="POST" action="{{ url_for('cursos') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                {{ form.nombre.label(class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300") }}
+                {{ form.nombre(class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500") }}
+            </div>
+            <div>
+                {{ form.descripcion.label(class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300") }}
+                {{ form.descripcion(class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500") }}
+            </div>
+            <div class="md:col-span-2">
+                {{ form.maestro_id.label(class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300") }}
+                {{ form.maestro_id(class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500") }}
+            </div>
+        </div>
+        <button type="submit" class="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Guardar Curso</button>
+    </form>
+</div>
+
+<div class="container mx-auto mt-10 p-5 bg-white shadow-md rounded-lg dark:bg-gray-800">
+    <h2 class="text-2xl font-bold mb-5 dark:text-white">Lista de Cursos</h2>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">ID</th>
+                    <th scope="col" class="px-6 py-3">Nombre Curso</th>
+                    <th scope="col" class="px-6 py-3">Descripción</th>
+                    <th scope="col" class="px-6 py-3">Maestro Asignado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for curso in cursos %}
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ curso.id }}</th>
+                    <td class="px-6 py-4">{{ curso.nombre }}</td>
+                    <td class="px-6 py-4">{{ curso.descripcion }}</td>
+                    <td class="px-6 py-4">{{ curso.maestro.nombre }} {{ curso.maestro.apellidos }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

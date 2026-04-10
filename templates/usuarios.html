@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "layout.html" %} {% block container %} {% import "_macros.html" as macros %}
 
 <div class="py-12 relative flex justify-center items-center px-4 w-full mt-24">
@@ -83,3 +84,17 @@
 </div>
 {% endif %}
 {%endblock%}
+=======
+ {% extends "layout.html"}
+ {$ block container}
+ {%import "_macro.html" as macro %}
+
+ <form action="" method="post">
+    {{macro.campoNuevo(form.nombre)}}
+    {{macro.campoNuevo(form.apellido_paterno)}}
+    {{macro.campoNuevo(form.apellido_materno)}}
+    {{macro.campoNuevo(form.edad)}}
+    {{macro.campoNuevo(form.email)}}
+ </form>
+ {% endblock %}
+>>>>>>> 8be4c40b8fcba6601992cc4e96e2414dd7498bcb
