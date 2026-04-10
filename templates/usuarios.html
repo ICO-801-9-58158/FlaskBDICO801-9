@@ -1,0 +1,85 @@
+{% extends "layout.html" %} {% block container %} {% import "_macros.html" as macros %}
+
+<div class="py-12 relative flex justify-center items-center px-4 w-full mt-24">
+  
+  <div class="relative w-full max-w-2xl">
+    <!-- Glow effects -->
+    <div class="absolute -top-10 -left-10 w-48 h-48 bg-fuchsia-600 rounded-full mix-blend-screen filter blur-[80px] opacity-30 animate-pulse"></div>
+    <div class="absolute -bottom-10 -right-10 w-48 h-48 bg-indigo-600 rounded-full mix-blend-screen filter blur-[80px] opacity-30 animate-[pulse_3s_ease-in-out_infinite]"></div>
+
+    <div class="relative bg-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.3)] backdrop-blur-2xl border border-white/10 rounded-3xl p-8 md:p-12">
+      <h2 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-indigo-400 mb-8 text-center tracking-tight">Registro de Usuario</h2>
+      
+      <form action="" method="POST" novalidate class="w-full">
+        <!-- Input classes inside macros calls replaced with transparent glassmorphic styles -->
+        <div class="relative z-0 w-full mb-6 group">
+          {{macros.campoNuevo(form.matricula, class="block py-3 px-4 w-full text-sm text-slate-100 bg-black/20 border border-white/10 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent transition-all duration-300 placeholder-slate-400")}}
+        </div>
+        <div class="relative z-0 w-full mb-6 group">
+          {{macros.campoNuevo(form.nombre, class="block py-3 px-4 w-full text-sm text-slate-100 bg-black/20 border border-white/10 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent transition-all duration-300 placeholder-slate-400")}}
+        </div>
+        <div class="relative z-0 w-full mb-6 group">
+          {{macros.campoNuevo(form.apaterno,class="block py-3 px-4 w-full text-sm text-slate-100 bg-black/20 border border-white/10 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent transition-all duration-300 placeholder-slate-400")}}
+        </div>
+        <div class="relative z-0 w-full mb-6 group">
+          {{macros.campoNuevo(form.amaterno,class="block py-3 px-4 w-full text-sm text-slate-100 bg-black/20 border border-white/10 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent transition-all duration-300 placeholder-slate-400")}}
+        </div>
+        <div class="relative z-0 w-full mb-6 group">
+          {{macros.campoNuevo(form.edad,class="block py-3 px-4 w-full text-sm text-slate-100 bg-black/20 border border-white/10 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent transition-all duration-300 placeholder-slate-400")}}
+        </div>
+        <div class="relative z-0 w-full mb-8 group">
+          {{macros.campoNuevo(form.correo, class="block py-3 px-4 w-full text-sm text-slate-100 bg-black/20 border border-white/10 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent transition-all duration-300 placeholder-slate-400")}}
+        </div>
+        
+        <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
+          <button type="submit" id="btn1" name="btn1" class="relative group/btn w-full sm:w-auto overflow-hidden rounded-xl p-[1px] focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-slate-900 transition-all duration-300">
+            <span class="absolute inset-0 bg-gradient-to-r from-fuchsia-500 via-purple-500 to-indigo-500 opacity-70 group-hover/btn:opacity-100 transition-opacity duration-300"></span>
+            <div class="relative bg-slate-900/80 px-8 py-3 rounded-xl backdrop-blur-sm transition-all duration-300 group-hover/btn:bg-transparent">
+              <span class="text-white font-semibold text-sm tracking-wide">Registrar</span>
+            </div>
+          </button>
+          
+          <a href="index" class="w-full sm:w-auto flex justify-center items-center gap-2 px-8 py-3 text-sm font-semibold text-slate-300 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:text-white transition-all duration-300">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Cancelar
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% if mat %}
+<div class="py-12 relative flex justify-center w-full px-4">
+  <div class="w-full max-w-2xl bg-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.3)] backdrop-blur-xl border border-indigo-500/30 rounded-3xl p-8 relative overflow-hidden group">
+    <div class="absolute right-0 top-0 w-32 h-32 bg-indigo-500/20 rounded-bl-full blur-2xl"></div>
+    <div class="relative z-10 flex flex-col gap-4">
+      <h3 class="text-2xl font-bold text-white border-b border-white/10 pb-4 mb-2 flex items-center justify-between">
+        <span>Datos Registrados</span>
+        <span class="text-xs bg-indigo-500/20 text-indigo-300 px-3 py-1 rounded-full border border-indigo-500/30">Exitoso</span>
+      </h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-slate-300">
+        <div class="bg-black/20 p-4 rounded-xl border border-white/5">
+          <span class="text-xs text-fuchsia-400 font-bold uppercase tracking-wider block mb-1">Matrícula</span>
+          <span class="text-lg font-medium text-white">{{mat}}</span>
+        </div>
+        <div class="bg-black/20 p-4 rounded-xl border border-white/5">
+          <span class="text-xs text-fuchsia-400 font-bold uppercase tracking-wider block mb-1">Nombre Completo</span>
+          <span class="text-lg font-medium text-white">{{nom}} {{apa}} {{ama}}</span>
+        </div>
+        <div class="bg-black/20 p-4 rounded-xl border border-white/5">
+          <span class="text-xs text-fuchsia-400 font-bold uppercase tracking-wider block mb-1">Edad</span>
+          <span class="text-lg font-medium text-white">{{edad}} años</span>
+        </div>
+        <div class="bg-black/20 p-4 rounded-xl border border-white/5">
+          <span class="text-xs text-fuchsia-400 font-bold uppercase tracking-wider block mb-1">Correo</span>
+          <span class="text-lg font-medium text-white">{{email}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{%endblock%}

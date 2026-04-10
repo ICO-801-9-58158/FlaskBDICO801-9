@@ -1,0 +1,92 @@
+{% extends "layout.html" %} {% block container %}
+<div class="group py-32 relative overflow-x-auto sm:rounded-lg">
+<div
+  class="relative bg-neutral-primary-soft max-w-xs w-full p-6 border border-default rounded-base shadow-xs"
+>
+  <button
+    id="dropdownButton"
+    data-dropdown-toggle="dropdown"
+    class="absolute top-2 end-2 text-body hover:text-heading bg-neutral-primary-soft box-border border border-transparent hover:bg-neutral-tertiary focus:ring-4 focus:ring-neutral-tertiary rounded-base p-1.5 focus:outline-none"
+    type="button"
+  >
+    <span class="sr-only">Open dropdown</span>
+    <svg
+      class="w-6 h-6"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-width="3"
+        d="M6 12h.01m6 0h.01m5.99 0h.01"
+      />
+    </svg>
+  </button>
+
+  <div
+    id="dropdown"
+    class="z-10 bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-36 block hidden">
+    <ul
+      class="p-2 text-sm text-body font-medium"
+      aria-labelledby="dropdownButton"
+    >
+      <li>
+        <a
+          href="#"
+          class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded-md"
+          >Edit</a
+        >
+      </li>
+      <li>
+        <a
+          href="#"
+          class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded-md"
+          >Export Data</a
+        >
+      </li>
+      <li>
+        <a
+          href="#"
+          class="inline-flex items-center w-full p-2 text-fg-danger hover:bg-neutral-tertiary-medium rounded-md"
+          >Delete</a
+        >
+      </li>
+    </ul>
+  </div>
+
+  <div class="flex flex-col items-center">
+    <img
+      class="w-24 h-24 mb-6 rounded-full"
+      src="{{url_for('static',filename='img/usuario.png')}}"
+      alt="Bonnie image"
+    />
+    <h5 class="mb-0.5 text-xl font-semibold tracking-tight text-heading">
+      Nombre: {{nombre}} {{apellidos}}
+    </h5>
+    <h3 class="mb-2 text-2xl tracking-tight text-gray-900 dark:text-white">
+      Matrícula: {{matricula}}
+    </h3>
+    <h3 class="mb-2 text-2xl tracking-tight text-gray-900 dark:text-white">
+      Correo: {{email}}
+    </h3>
+    <h3 class="mb-2 text-2xl tracking-tight text-gray-900 dark:text-white">
+      Especialidad: {{especialidad}}
+    </h3>
+
+    <div class="flex mt-4 md:mt-6 gap-4">
+      <a href="{{ url_for('maestros.maestros') }}" class="bg-green-500 text-white px-4 py-2 rounded flex items-center gap-2 hover:bg-green-600">
+        <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12h4m-2 2v-4M4 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+          </svg>
+        Regresar
+      </a>
+    </div>
+  </div>
+</div>
+</div>
+{%endblock%}
