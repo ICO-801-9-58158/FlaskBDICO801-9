@@ -1,87 +1,51 @@
-{% extends "layout.html" %} {% block container %}
-<div class="group py-32 relative overflow-x-auto sm:rounded-lg">
-<div
-  class="relative bg-neutral-primary-soft max-w-xs w-full p-6 border border-default rounded-base shadow-xs"
->
-  <button
-    id="dropdownButton"
-    data-dropdown-toggle="dropdown"
-    class="absolute top-2 end-2 text-body hover:text-heading bg-neutral-primary-soft box-border border border-transparent hover:bg-neutral-tertiary focus:ring-4 focus:ring-neutral-tertiary rounded-base p-1.5 focus:outline-none"
-    type="button"
-  >
-    <span class="sr-only">Open dropdown</span>
-    <svg
-      class="w-6 h-6"
-      aria-hidden="true"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <path
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-width="3"
-        d="M6 12h.01m6 0h.01m5.99 0h.01"
-      />
-    </svg>
-  </button>
-  <div
-    id="dropdown"
-    class="z-10 bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-36 block hidden">
-    <ul
-      class="p-2 text-sm text-body font-medium"
-      aria-labelledby="dropdownButton"
-    >
-      <li>
-        <a
-          href="#"
-          class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded-md"
-          >Edit</a
-        >
-      </li>
-      <li>
-        <a
-          href="#"
-          class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded-md"
-          >Export Data</a
-        >
-      </li>
-      <li>
-        <a
-          href="#"
-          class="inline-flex items-center w-full p-2 text-fg-danger hover:bg-neutral-tertiary-medium rounded-md"
-          >Delete</a
-        >
-      </li>
-    </ul>
-  </div>
-  <div class="flex flex-col items-center">
-    <img
-      class="w-24 h-24 mb-6 rounded-full"
-      src="{{url_for('static',filename='img/usuario.png')}}"
-      alt="Bonnie image"
-    />
-    <h5 class="mb-0.5 text-xl font-semibold tracking-tight text-heading">
-      Nombre: {{nombre}} {{apaterno}}
-    </h5>
-     <h3 class="mb-2 text-2xl tracking-tight text-gray-900 dark:text-white">
-      Correo: {{email}}
-    </h3>
-    <h3 class="mb-2 text-2xl tracking-tight text-gray-900 dark:text-white">
-      Edad: {{edad}}
-    </h3>
+{% extends "layout.html" %} 
+{% block container %} 
 
-    <div class="flex mt-4 md:mt-6 gap-4">
-      <a href="{{ url_for('index') }}" class="bg-green-500 text-white px-4 py-2 rounded flex items-center gap-2 hover:bg-green-600">
-        <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12h4m-2 2v-4M4 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+<div class="py-12 relative flex justify-center items-center px-4 w-full mt-4">
+  <div class="relative w-full max-w-2xl">
+    <!-- Glow effects -->
+    <div class="absolute -top-10 -left-10 w-48 h-48 bg-sky-600 rounded-full mix-blend-screen filter blur-[80px] opacity-20 animate-pulse"></div>
+    <div class="absolute -bottom-10 -right-10 w-48 h-48 bg-indigo-600 rounded-full mix-blend-screen filter blur-[80px] opacity-20 animate-pulse"></div>
+
+    <div class="relative bg-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.3)] backdrop-blur-2xl border border-white/10 rounded-3xl p-8 md:p-12 transition-all duration-500 hover:shadow-[0_8px_48px_rgba(0,0,0,0.4)]">
+      <div class="flex items-center justify-between mb-8 border-b border-white/10 pb-6">
+        <h2 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-400 tracking-tight">Detalles del Alumno</h2>
+        <div class="px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-bold uppercase tracking-widest">ID: {{ id }}</div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-black/20 p-5 rounded-2xl border border-white/5 transition-all duration-300 hover:bg-black/30 hover:border-white/10">
+          <span class="text-xs text-sky-400 font-bold uppercase tracking-widest block mb-2">Nombre Completo</span>
+          <span class="text-xl font-semibold text-white">{{ nombre }} {{ apaterno }} {{ amaterno }}</span>
+        </div>
+        
+        <div class="bg-black/20 p-5 rounded-2xl border border-white/5 transition-all duration-300 hover:bg-black/30 hover:border-white/10">
+          <span class="text-xs text-sky-400 font-bold uppercase tracking-widest block mb-2">Edad</span>
+          <span class="text-xl font-semibold text-white">{{ edad }} años</span>
+        </div>
+        
+        <div class="bg-black/20 p-5 rounded-2xl border border-white/5 transition-all duration-300 hover:bg-black/30 hover:border-white/10 md:col-span-2">
+          <span class="text-xs text-sky-400 font-bold uppercase tracking-widest block mb-2">Correo Electrónico</span>
+          <span class="text-xl font-semibold text-white break-all">{{ email }}</span>
+        </div>
+      </div>
+      
+      <div class="flex flex-col sm:flex-row gap-4 items-center justify-center mt-12 pt-8 border-t border-white/5">
+        <a href="{{ url_for('modificar', id=id) }}" class="w-full sm:w-auto flex justify-center items-center gap-2 px-8 py-3.5 text-sm font-bold text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 transition-all duration-300 uppercase tracking-widest shadow-[0_0_20px_rgba(79,70,229,0.3)]">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
           </svg>
-        Regresar
-      </a>
+          Editar Registro
+        </a>
+        
+        <a href="{{ url_for('index') }}" class="w-full sm:w-auto flex justify-center items-center gap-2 px-8 py-3.5 text-sm font-bold text-slate-300 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:text-white transition-all duration-300 uppercase tracking-widest">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Volver al Inicio
+        </a>
+      </div>
     </div>
   </div>
 </div>
-</div>
-{%endblock%}
+{% endblock %}
