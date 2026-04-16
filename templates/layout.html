@@ -25,11 +25,15 @@
           <a href="{{ url_for('index') }}" class="block py-2 px-4 text-white hover:text-fuchsia-400 bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 font-semibold shadow-sm">Inicio</a>
         </li>
         <li>
-          <a href="{{ url_for('lista_alumnos') }}" class="block py-2 px-4 text-slate-300 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium">Alumnos</a>
+          <a href="{{ url_for('alumnos.lista_alumnos') }}" class="block py-2 px-4 text-slate-300 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium">Alumnos</a>
         </li>
         <li>
           <a href="{{ url_for('maestros.maestros') }}" class="block py-2 px-4 text-slate-300 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium">Maestros</a>
         </li>
+        <li>
+          <a href="{{ url_for('cursos.lista_cursos') }}" class="block py-2 px-4 text-slate-300 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium">Cursos</a>
+        </li>
+
       </ul>
     </div>
   </div>

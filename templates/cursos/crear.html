@@ -1,0 +1,61 @@
+{% extends "layout.html" %} {% block container %}
+
+<div class="py-12 relative overflow-hidden px-4 md:px-8 mt-24 max-w-2xl mx-auto">
+  <!-- Decorative background elements -->
+  <div class="absolute top-0 right-0 w-64 h-64 bg-fuchsia-600 rounded-full mix-blend-screen filter blur-[100px] opacity-20"></div>
+  <div class="absolute bottom-0 left-0 w-64 h-64 bg-indigo-600 rounded-full mix-blend-screen filter blur-[100px] opacity-20"></div>
+
+  <div class="relative z-10">
+    <div class="mb-8 text-center">
+      <h2 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-indigo-400 tracking-tight">Registrar Nuevo Curso</h2>
+      <p class="text-slate-400 mt-2 text-sm font-medium">Completa la información para dar de alta una nueva asignatura.</p>
+    </div>
+
+    <div class="bg-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.3)] backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+      <form method="POST" class="space-y-6">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        
+        <div>
+          <label for="nombre" class="block text-sm font-semibold text-slate-300 mb-2">Nombre del Curso</label>
+          {{ form.nombre(class="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-fuchsia-500/50 focus:border-fuchsia-500 transition-all duration-300 outline-none", placeholder="Ej. Matemáticas Avanzadas") }}
+          {% if form.nombre.errors %}
+            {% for error in form.nombre.errors %}
+              <p class="mt-2 text-xs text-rose-400 font-medium">{{ error }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
+
+        <div>
+          <label for="maestro_id" class="block text-sm font-semibold text-slate-300 mb-2">Maestro Asignado</label>
+          {{ form.maestro_id(class="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-fuchsia-500/50 focus:border-fuchsia-500 transition-all duration-300 outline-none select-none") }}
+          {% if form.maestro_id.errors %}
+            {% for error in form.maestro_id.errors %}
+              <p class="mt-2 text-xs text-rose-400 font-medium">{{ error }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
+
+        <div>
+          <label for="descripcion" class="block text-sm font-semibold text-slate-300 mb-2">Descripción</label>
+          {{ form.descripcion(class="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-fuchsia-500/50 focus:border-fuchsia-500 transition-all duration-300 outline-none min-h-[120px]", placeholder="Describe los objetivos del curso...") }}
+          {% if form.descripcion.errors %}
+            {% for error in form.descripcion.errors %}
+              <p class="mt-2 text-xs text-rose-400 font-medium">{{ error }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
+
+        <div class="flex gap-4 pt-4">
+          <a href="{{ url_for('cursos.lista_cursos') }}" class="flex-1 text-center px-6 py-3 rounded-xl border border-white/10 text-slate-300 font-semibold hover:bg-white/5 transition-all duration-300">
+            Cancelar
+          </a>
+          <button type="submit" class="flex-[2] bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white font-bold py-3 px-6 rounded-xl shadow-[0_0_20px_rgba(217,70,239,0.3)] hover:shadow-[0_0_25px_rgba(217,70,239,0.5)] hover:scale-[1.02] active:scale-95 transition-all duration-300">
+            Guardar Curso
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -12,9 +12,10 @@
       <h2 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-slate-400 mb-4 text-center tracking-tight">Eliminar Alumno</h2>
       <p class="text-slate-400 text-center mb-8 font-medium">¿Estás seguro de que deseas eliminar este registro? Esta acción no se puede deshacer.</p>
       
-      <form action="{{ url_for('eliminar') }}" method="POST" novalidate class="w-full">
+      <form action="{{ url_for('alumnos.eliminar') }}" method="POST" novalidate class="w-full">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-        <input type="hidden" name="id" value="{{ form.id.data }}"/>
+        {{ form.id }}
+
         
         <div class="space-y-1 opacity-60 pointer-events-none">
             {{ macros.campoNuevo(form.nombre) }}
@@ -23,18 +24,11 @@
             {{ macros.campoNuevo(form.email) }}
         </div>
         
-        <div class="flex flex-col sm:flex-row gap-4 items-center justify-between mt-10">
-          <button type="submit" class="relative group/btn w-full sm:w-auto overflow-hidden rounded-xl p-[1px] focus:outline-none focus:ring-2 focus:ring-rose-400 focus:ring-offset-2 focus:ring-offset-slate-900 transition-all duration-300">
-            <span class="absolute inset-0 bg-gradient-to-r from-rose-500 via-red-600 to-rose-700 opacity-70 group-hover/btn:opacity-100 transition-opacity duration-300"></span>
-            <div class="relative bg-slate-900/80 px-10 py-3.5 rounded-xl backdrop-blur-sm transition-all duration-300 group-hover/btn:bg-transparent">
-              <span class="text-white font-bold text-sm tracking-widest uppercase text-center block">Eliminar Definitivamente</span>
-            </div>
+        <div class="flex flex-col gap-3 mt-10">
+          <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 px-6 rounded-xl shadow-[0_0_15px_rgba(225,29,72,0.3)] transition-all duration-300">
+            Sí, Eliminar Alumno
           </button>
-          
-          <a href="{{ url_for('index') }}" class="w-full sm:w-auto flex justify-center items-center gap-2 px-8 py-3.5 text-sm font-bold text-slate-300 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:text-white transition-all duration-300 uppercase tracking-widest">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-            </svg>
+          <a href="{{ url_for('alumnos.lista_alumnos') }}" class="w-full text-center px-6 py-3 rounded-xl border border-white/10 text-slate-300 font-semibold hover:bg-white/5 transition-all duration-300">
             Cancelar
           </a>
         </div>
