@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash
-from models import db, Alumnos
+from models import db, Alumnos, Inscripcion
 import forms
 from . import alumnos_bp
 
@@ -58,13 +58,24 @@ def modificar():
 @alumnos_bp.route('/alumnos/eliminar', methods=['GET', 'POST'])
 def eliminar():
     create_form = forms.UserForm(request.form)
-    id = request.args.get('id') or request.form.get('id')
-    alum1 = db.session.get(Alumnos, id)
+    id_val = request.args.get('id') or request.form.get('id')
+    try:
+        alumno_id = int(id_val) if id_val else None
+    except (ValueError, TypeError):
+        flash("ID de alumno inválido")
+        return redirect(url_for('alumnos.lista_alumnos'))
+
+    alum1 = db.session.get(Alumnos, alumno_id)
+    
+    if not alum1:
+        flash("Alumno no encontrado")
+        return redirect(url_for('alumnos.lista_alumnos'))
+
+    # Check if student is enrolled in any courses
+    inscripciones = Inscripcion.query.filter_by(alumno_id=alumno_id).all()
+    has_inscriptions = len(inscripciones) > 0
 
     if request.method == 'GET':
-        if not alum1:
-            flash("Alumno no encontrado")
-            return redirect(url_for('alumnos.lista_alumnos'))
         create_form.id.data = alum1.id
         create_form.nombre.data = alum1.nombre
         create_form.apaterno.data = alum1.apaterno
@@ -73,13 +84,27 @@ def eliminar():
         create_form.email.data = alum1.email
 
     if request.method == 'POST':
-        if alum1:
-            db.session.delete(alum1)
-            db.session.commit()
-            flash("Alumno eliminado correctamente")
+        try:
+            # Re-fetch or ensure it's in session
+            alum1 = db.session.get(Alumnos, alumno_id)
+            if alum1:
+                # SCORCHED EARTH: Manual cleanup
+                # 1. Clear all inscriptions for this student
+                Inscripcion.query.filter_by(alumno_id=alumno_id).delete()
+                
+                # 2. Finally delete the student
+                db.session.delete(alum1)
+                db.session.commit()
+                flash("Alumno y su historial eliminados correctamente")
+            else:
+                flash("El alumno ya ha sido eliminado o no existe.")
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Error al eliminar: {str(e)}")
+            
         return redirect(url_for('alumnos.lista_alumnos'))
-        
-    return render_template('alumnos/eliminar.html', form=create_form)
+
+    return render_template('alumnos/eliminar.html', form=create_form, has_inscriptions=has_inscriptions, inscripciones=inscripciones)
 
 @alumnos_bp.route("/alumnos/detalles", methods=['GET'])
 def detalles():

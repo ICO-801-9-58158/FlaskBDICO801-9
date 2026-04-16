@@ -41,27 +41,8 @@
       </div>
     </div>
 
-    <!-- Students List & Enrollment -->
-    <div class="lg:col-span-2 space-y-8">
-      <!-- Enrollment Form -->
-      <div class="bg-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.3)] backdrop-blur-xl border border-white/10 rounded-2xl p-6">
-        <h4 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
-          <svg class="w-5 h-5 text-fuchsia-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
-          Inscribir Alumno
-        </h4>
-        <form method="POST" class="flex flex-col md:flex-row gap-4">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          {{ enroll_form.curso_id }}
-          <div class="flex-1">
-            {{ enroll_form.alumno_id(class="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:ring-2 focus:ring-fuchsia-500/50 outline-none select-none") }}
-          </div>
-          <button type="submit" class="bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-bold py-2.5 px-6 rounded-xl transition-all duration-300 shadow-[0_0_15px_rgba(217,70,239,0.3)]">
-            Inscribir
-          </button>
-        </form>
-      </div>
-
-      <!-- Students Table -->
+    <!-- Students List -->
+    <div class="lg:col-span-2">
       <div class="bg-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.3)] backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
         <div class="p-6 border-b border-white/10 flex justify-between items-center">
             <h4 class="text-lg font-bold text-white">Alumnos Inscritos</h4>
@@ -75,7 +56,6 @@
               <tr>
                 <th scope="col" class="px-6 py-4">Nombre</th>
                 <th scope="col" class="px-6 py-4">Email</th>
-                <th scope="col" class="px-6 py-4 text-center">Acción</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-white/5">
@@ -85,21 +65,11 @@
                     {{ alum.nombre }} {{ alum.apaterno }}
                 </td>
                 <td class="px-6 py-4 text-slate-400 text-xs">{{ alum.email }}</td>
-                <td class="px-6 py-4 text-center">
-                  <form action="{{ url_for('cursos.desvincular_alumno') }}" method="POST" class="inline">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="alumno_id" value="{{ alum.id }}">
-                    <input type="hidden" name="curso_id" value="{{ curso.id }}">
-                    <button type="submit" class="text-rose-400 hover:text-rose-200 transition-colors p-2" title="Desvincular">
-                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7a4 4 0 11-8 0 4 4 0 018 0zM9 14a6 6 0 00-6 6v1h12v-1a6 6 0 00-6-6zM21 12h-6"></path></svg>
-                    </button>
-                  </form>
-                </td>
               </tr>
               {% endfor %}
               {% if not curso.alumnos %}
               <tr>
-                <td colspan="3" class="px-6 py-12 text-center text-slate-500">
+                <td colspan="2" class="px-6 py-12 text-center text-slate-500">
                     No hay alumnos inscritos en este curso todavía.
                 </td>
               </tr>

@@ -88,39 +88,7 @@ def detalles_curso():
         flash("Curso no encontrado")
         return redirect(url_for('cursos.lista_cursos'))
 
-    # Form for enrolling new students
-    enroll_form = forms.InscripcionForm(request.form)
-    # Filter out students already in the course
-    enrolled_ids = [a.id for a in curso.alumnos]
-    available_students = Alumnos.query.filter(~Alumnos.id.in_(enrolled_ids) if enrolled_ids else True).all()
-    enroll_form.alumno_id.choices = [(s.id, f"{s.nombre} {s.apaterno}") for s in available_students]
-    enroll_form.curso_id.data = curso.id
-
-    if request.method == 'POST' and enroll_form.validate():
-        alumno_id = enroll_form.alumno_id.data
-        nueva_inscripcion = Inscripcion(alumno_id=alumno_id, curso_id=id)
-        db.session.add(nueva_inscripcion)
-        db.session.commit()
-        flash("Alumno inscrito exitosamente")
-        return redirect(url_for('cursos.detalles_curso', id=id))
-        
     return render_template(
         'cursos/detalles.html',
-        curso=curso,
-        enroll_form=enroll_form
+        curso=curso
     )
-
-@cursos_bp.route("/cursos/desvincular", methods=['POST'])
-def desvincular_alumno():
-    alumno_id = request.form.get('alumno_id')
-    curso_id = request.form.get('curso_id')
-    
-    inscripcion = Inscripcion.query.filter_by(alumno_id=alumno_id, curso_id=curso_id).first()
-    if inscripcion:
-        db.session.delete(inscripcion)
-        db.session.commit()
-        flash("Alumno desvinculado del curso")
-    else:
-        flash("Inscripción no encontrada")
-        
-    return redirect(url_for('cursos.detalles_curso', id=curso_id))

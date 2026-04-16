@@ -6,10 +6,21 @@ from models import db
 from maestros import maestros_bp
 from alumnos import alumnos_bp
 from cursos import cursos_bp
+from inscripciones import inscripciones_bp
 import forms
+
+from sqlalchemy import event
+from sqlalchemy.engine import Engine
 
 app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
+
+# Enable Foreign Key support for SQLite
+@event.listens_for(Engine, "connect")
+def set_sqlite_pragma(dbapi_connection, connection_record):
+    cursor = dbapi_connection.cursor()
+    cursor.execute("PRAGMA foreign_keys=ON")
+    cursor.close()
 
 # Initialize extensions
 db.init_app(app)
@@ -20,25 +31,13 @@ migrate = Migrate(app, db)
 app.register_blueprint(maestros_bp)
 app.register_blueprint(alumnos_bp)
 app.register_blueprint(cursos_bp)
+app.register_blueprint(inscripciones_bp)
 
 @app.route("/", methods=["GET"])
 @app.route("/index")
 def index():
     return render_template("bienvenida.html")
 
-@app.route("/usuarios", methods=["GET", "POST"])
-def usuario():
-    usuarios_clas = forms.UserForm(request.form)
-    mat, nom, apa, ama, edad, email = 0, '', '', '', 0, ''
-    
-    if request.method == 'POST' and usuarios_clas.validate():
-        mat = usuarios_clas.id.data
-        nom = usuarios_clas.nombre.data
-        apa = usuarios_clas.apaterno.data
-        ama = usuarios_clas.amaterno.data
-        edad = usuarios_clas.edad.data
-        email = usuarios_clas.email.data
-        flash("Usuario procesado correctamente")
 
     return render_template(
         'usuarios.html',

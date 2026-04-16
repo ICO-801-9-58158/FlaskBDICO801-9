@@ -14,10 +14,23 @@ class Alumnos(db.Model):
     email = db.Column(db.String(50), nullable=False)
     created_date = db.Column(db.DateTime, default=datetime.datetime.now)
 
+    # Many-to-many relationship (direct to Course via bridge)
     cursos = db.relationship(
         'Curso',
         secondary='inscripciones',
-        back_populates='alumnos'
+        back_populates='alumnos',
+        passive_deletes=True,
+        overlaps="inscripciones_list,alumno,curso"
+    )
+
+    # Direct relationship to Inscriptions bridge table
+    # This is for detailed access (e.g. date_enrolled)
+    inscripciones_list = db.relationship(
+        'Inscripcion',
+        back_populates='alumno',
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+        overlaps="cursos"
     )
 
 
@@ -30,7 +43,12 @@ class Maestros(db.Model):
     especialidad = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(50), nullable=False)
 
-    cursos = db.relationship('Curso', back_populates='maestro')
+    cursos = db.relationship(
+        'Curso', 
+        back_populates='maestro', 
+        cascade="all, delete-orphan",
+        passive_deletes=True
+    )
 
 
 class Curso(db.Model):
@@ -42,16 +60,28 @@ class Curso(db.Model):
 
     maestro_id = db.Column(
         db.Integer,
-        db.ForeignKey('maestros.matricula'),
+        db.ForeignKey('maestros.matricula', ondelete="CASCADE"),
         nullable=False
     )
 
-    maestro = db.relationship('Maestros', back_populates='cursos')
+    maestro = db.relationship('Maestros', back_populates='cursos', passive_deletes=True)
 
+    # Many-to-many relationship (direct to Alumnos via bridge)
     alumnos = db.relationship(
         'Alumnos',
         secondary='inscripciones',
-        back_populates='cursos'
+        back_populates='cursos',
+        passive_deletes=True,
+        overlaps="inscripciones_list,alumno,curso"
+    )
+
+    # Direct relationship to Inscriptions bridge table
+    inscripciones_list = db.relationship(
+        'Inscripcion',
+        back_populates='curso',
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+        overlaps="alumnos"
     )
 
 
@@ -62,13 +92,13 @@ class Inscripcion(db.Model):
 
     alumno_id = db.Column(
         db.Integer,
-        db.ForeignKey('alumnos.id'),
+        db.ForeignKey('alumnos.id', ondelete="CASCADE"),
         nullable=False
     )
 
     curso_id = db.Column(
         db.Integer,
-        db.ForeignKey('cursos.id'),
+        db.ForeignKey('cursos.id', ondelete="CASCADE"),
         nullable=False
     )
 
@@ -76,6 +106,10 @@ class Inscripcion(db.Model):
         db.DateTime,
         server_default=db.func.now()
     )
+
+    # Back-populates provides better control than backref
+    alumno = db.relationship('Alumnos', back_populates='inscripciones_list', overlaps="cursos,alumnos")
+    curso = db.relationship('Curso', back_populates='inscripciones_list', overlaps="cursos,alumnos")
 
     __table_args__ = (
         db.UniqueConstraint('alumno_id', 'curso_id', name='uq_alumno_curso'),
